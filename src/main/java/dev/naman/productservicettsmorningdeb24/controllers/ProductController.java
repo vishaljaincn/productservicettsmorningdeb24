@@ -1,10 +1,8 @@
 package dev.naman.productservicettsmorningdeb24.controllers;
 
 import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
-import dev.naman.productservicettsmorningdeb24.dtos.ErrorDto;
 import dev.naman.productservicettsmorningdeb24.exceptions.ProductNotFoundException;
 import dev.naman.productservicettsmorningdeb24.models.Product;
-import dev.naman.productservicettsmorningdeb24.services.FakeStoreProductService;
 import dev.naman.productservicettsmorningdeb24.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,7 @@ public class ProductController {
 //    private ProductService productService2 = new FakeStoreProductService();
 
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService,
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
                              RestTemplate restTemplate
     ) {
         this.productService = productService;
@@ -63,14 +61,17 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts() throws ProductNotFoundException {
+    public ResponseEntity<?> getAllProducts() {
 
-        List<Product> products = productService.getProducts();
+        List<Product> products;
+        try {
+            products = productService.getProducts();
+            throw new ProductNotFoundException("Product not found");
 
-//        throw new ProductNotFoundException("Bla bla bla");
 
-        ResponseEntity<List<Product>> response = new ResponseEntity<>(products, HttpStatus.OK);
-        return response;
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     public void updateProduct() {

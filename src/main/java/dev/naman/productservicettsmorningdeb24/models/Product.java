@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 @Getter
@@ -21,7 +22,6 @@ public class Product extends BaseModel{
     private String description;
     private double price;
     private String imageUrl;
-//    @ManyToOne
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Category category;
 

@@ -20,7 +20,7 @@ import java.util.List;
 public class Category extends BaseModel {
     private String title;
     @OneToMany(mappedBy = "category", cascade = {CascadeType.REMOVE})
-//    @ManyToMany(mappedBy = "dhqwohewhjepd")
+   // @ManyToMany(mappedBy = "dhqwohewhjepd")
     @JsonIgnore
     private List<Product> products;
 }

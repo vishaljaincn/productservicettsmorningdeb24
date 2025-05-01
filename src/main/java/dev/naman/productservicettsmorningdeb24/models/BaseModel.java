@@ -7,6 +7,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.ref.WeakReference;
 import java.util.Date;
 
 @Getter
@@ -19,6 +20,7 @@ public class BaseModel {
     private Date createdAt;
     private Date lastUpdatedAt;
     private boolean isDeleted;
+
 
 //    public Date getCreatedAt() {
 //        return createdAt;
